@@ -17,14 +17,15 @@
 ;; NOTES: will this work on normal keyboard setup? did this setup using external keyboard;
 ;; not sure how this will translate to non-mac systems
 
-;; swap left control and super keys to get nice positioning but
-;; availability of prelude super functionality
+;; make command key act as control, but retain access to super key
+;; for occasional use of nice prelude functionality (show recent files, etc)
 (setq mac-command-modifier 'control)
-(setq mac-control-modifier 'super)
-;;(setq mac-option-modifier 'meta)
+(setq mac-control-modifier 'control)
+(setq ns-right-control-modifier 'super)
 
 
 ;; lorem ipsum setup
+(require 'lorem-ipsum)
 (autoload 'Lorem-ipsum-insert-paragraphs "lorem-ipsum" "" t)
 (autoload 'Lorem-ipsum-insert-sentences "lorem-ipsum" "" t)
 (autoload 'Lorem-ipsum-insert-list "lorem-ipsum" "" t)
@@ -81,3 +82,41 @@
 ;; setup autopair and enable in all buffers
 (require 'autopair)
 (autopair-global-mode)
+
+;; setup rspec mode and rspec snippets
+(require 'rspec-mode)
+(eval-after-load 'rspec-mode
+ '(rspec-install-snippets))
+
+;; setup multi term
+(require 'multi-term)
+(setq multi-term-program "/bin/bash")
+
+;; make gui emacs load path from shell on OS X
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+
+;; ; setup multiple cursors
+;; (require 'multiple-cursors)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "S-C-d") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-M-g") 'mc/mark-all-like-this)
+
+;; setup org2blog
+(package-initialize) 
+(require 'netrc) ;; or nothing if already in the load-path
+(require 'org2blog)
+(require 'xml-rpc-autoloads)
+(require 'org2blog-autoloads)
+(require 'metaweblog)
+(add-hook 'org-mode-hook 'org2blog/wp-mode)
+
+(setq arsblog 
+      (netrc-machine (netrc-parse "~/.netrc") "andrewblog" t))
+(setq org2blog/wp-blog-alist
+      '(("andrewblog"
+         :url "http://www.andrewskotzko.com/xmlrpc.php"
+         :username (netrc-get arsblog "login")
+         :password (netrc-get arsblog "password"))))

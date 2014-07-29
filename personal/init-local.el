@@ -22,6 +22,7 @@
 (setq mac-command-modifier 'control)
 (setq mac-control-modifier 'control)
 (setq ns-right-control-modifier 'super)
+(setq ns-right-command-modifier 'super) ;; for ze laptop keyboard
 
 
 ;; lorem ipsum setup
@@ -91,18 +92,21 @@
 ;; setup multi term
 (require 'multi-term)
 (setq multi-term-program "/bin/bash")
+(global-set-key (kbd "C-S-t") 'multi-term)
+(global-set-key (kbd "C-S-n") 'multi-term-next)
 
 ;; make gui emacs load path from shell on OS X
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
 
-;; ; setup multiple cursors
-;; (require 'multiple-cursors)
-;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-;; (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
-;; (global-set-key (kbd "S-C-d") 'mc/mark-previous-like-this)
-;; (global-set-key (kbd "C-M-g") 'mc/mark-all-like-this)
+; setup multiple cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-M-e") 'mark-sexp)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-d") 'mc/mark-next-like-this)
+(global-set-key (kbd "S-C-d") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-M-g") 'mc/mark-all-like-this)
 
 ;; setup org2blog
 (package-initialize) 
@@ -120,3 +124,7 @@
          :url "http://www.andrewskotzko.com/xmlrpc.php"
          :username (netrc-get arsblog "login")
          :password (netrc-get arsblog "password"))))
+
+
+;; setup ack for searching in projectile
+

@@ -126,5 +126,9 @@
          :password (netrc-get arsblog "password"))))
 
 
-;; setup ack for searching in projectile
-
+;; enable perspective minor mode for projectile
+(persp-mode)
+(require 'persp-projectile)
+(define-key projectile-mode-map (kbd "s-s") 'projectile-persp-switch-project)
+;; helm keybinding
+(global-set-key (kbd "C-c h") 'helm-projectile)

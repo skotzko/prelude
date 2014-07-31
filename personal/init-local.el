@@ -74,9 +74,6 @@
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-;; enable desktop save mode to easily resume work where left off
-(desktop-save-mode 1)
-
 ;; bind Control-return to add newline after current one and switch to it
 (global-set-key (kbd "<C-return>") (kbd "C-e C-j")
 )
@@ -109,7 +106,7 @@
 (global-set-key (kbd "C-M-g") 'mc/mark-all-like-this)
 
 ;; setup org2blog
-(package-initialize) 
+(package-initialize)
 (require 'netrc) ;; or nothing if already in the load-path
 (require 'org2blog)
 (require 'xml-rpc-autoloads)
@@ -117,7 +114,7 @@
 (require 'metaweblog)
 (add-hook 'org-mode-hook 'org2blog/wp-mode)
 
-(setq arsblog 
+(setq arsblog
       (netrc-machine (netrc-parse "~/.netrc") "andrewblog" t))
 (setq org2blog/wp-blog-alist
       '(("andrewblog"
@@ -127,8 +124,18 @@
 
 
 ;; enable perspective minor mode for projectile
+(require 'perspective)
 (persp-mode)
 (require 'persp-projectile)
 (define-key projectile-mode-map (kbd "s-s") 'projectile-persp-switch-project)
 ;; helm keybinding
 (global-set-key (kbd "C-c h") 'helm-projectile)
+
+;; strip whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; enable whitespace mode globally
+(global-whitespace-mode 1)
+
+;; enable desktop save mode to easily resume work where left off
+(desktop-save-mode 1)

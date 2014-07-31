@@ -3,12 +3,17 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        autopair-insert-opening
         org-self-insert-command
+        prelude-kill-whole-line
+        winner-undo
         ))
 
 (setq mc/cmds-to-run-once
       '(
         easy-mark
+        haml-electric-backspace
+        prelude-github
         prelude-move-beginning-of-line
         smex
         ))

@@ -139,3 +139,34 @@
 
 ;; enable desktop save mode to easily resume work where left off
 (desktop-save-mode 1)
+
+;; set keybinding for comment region
+(global-set-key (kbd "M-?") 'comment-region)
+(global-set-key (kbd "C-M-?") 'uncomment-region)
+
+;; wrap lines at fill column in text / org mode
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook
+          '(lambda() (set-fill-column 80)))
+
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
+(add-hook 'org-mode-hook
+          '(lambda() (set-fill-column 80)))
+
+(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
+(add-hook 'markdown-mode-hook
+          '(lambda() (set-fill-column 80)))
+
+;; get backtab to work
+(global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+(defun un-indent-by-removing-4-spaces ()
+  "remove 4 spaces from beginning of of line"
+  (interactive)
+  (save-excursion
+    (save-match-data
+      (beginning-of-line)
+      ;; get rid of tabs at beginning of line
+      (when (looking-at "^\\s-+")
+        (untabify (match-beginning 0) (match-end 0)))
+      (when (looking-at "^    ")
+        (replace-match "")))))

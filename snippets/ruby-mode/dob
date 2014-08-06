@@ -4,5 +4,4 @@
 # binding: direct-keybinding
 # --
 each do |$1|
-$2
 end

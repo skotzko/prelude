@@ -7,10 +7,12 @@
         org-self-insert-command
         prelude-kill-whole-line
         winner-undo
+        yas-expand
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        beginning-of-buffer
         easy-mark
         haml-electric-backspace
         prelude-github

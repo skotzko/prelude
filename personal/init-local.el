@@ -170,3 +170,8 @@
         (untabify (match-beginning 0) (match-end 0)))
       (when (looking-at "^    ")
         (replace-match "")))))
+
+;; set JS & coffeescript tab width to 2
+(custom-set-variables '(coffee-tab-width 2))
+(add-hook 'js-mode-hook
+          '(lambda() (setq js-indent-level 2)))
